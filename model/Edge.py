@@ -4,12 +4,11 @@ from abc import ABC,abstractclassmethod
 class Edge:
     @abstractclassmethod
     def __init__(self):
-        pass
-#FROM witch  TO witch one
-FROM=None
-TO=None
-#list of information
-about=[]
+    #FROM witch  TO witch one
+        self.FROM=None
+        self.TO=None
+    #list of information
+        self.about=[]
 
 
 class OwnerShip(Edge):
@@ -46,6 +45,7 @@ class Transactions(Edge):
             for value in a.get(k):
                 self.about.append(value)
 
+
 class Call(Edge):
     """
     key:
@@ -64,6 +64,7 @@ class Call(Edge):
             for value in a.get(k):
                 self.about.append(value)
 
+
 class Relation(Edge):
     """
     key:
@@ -79,4 +80,3 @@ class Relation(Edge):
             self.key = k
             for value in a.get(k):
                 self.about.append(value)
-

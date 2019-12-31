@@ -5,9 +5,13 @@ class Node:
     @abstractclassmethod
     def __init__(self):
         pass
-    key = None
+        self.key = None
     # list of information
-    about = []
+        self.about = []
+    # list for Edge
+        self.OUT=[]
+        self.IN=[]
+
 
 
 class Person(Node):
