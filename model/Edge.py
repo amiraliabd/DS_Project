@@ -8,3 +8,5 @@ TO=[]
 #list of information
 about=[]
 
+class ownship(Edge):
+    def __init__(self):
