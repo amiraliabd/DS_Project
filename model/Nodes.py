@@ -42,7 +42,6 @@ class Bank(Node):
             self.key = k
             for value in a.get(k):
                 self.about.append(value)
-        pass  # from and to must be complete
 
 
 class Home(Node):
@@ -61,7 +60,7 @@ class Home(Node):
             self.key=k
             for value in a.get(k):
                 self.about.append(value)
-        pass#from and to must be complete
+
 
 class Car(Node):
     """
@@ -76,7 +75,6 @@ class Car(Node):
             self.key=k
             for value in a.get(k):
                 self.about.append(value)
-        pass#from and to must be complete
 
 
 class Phone(Node):
@@ -92,6 +90,3 @@ class Phone(Node):
             self.key=k
             for value in a.get(k):
                 self.about.append(value)
-        pass#from and to must be complete
-
-
