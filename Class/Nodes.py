@@ -10,7 +10,7 @@ class Node:
         for value in ls:
             self.about.append(value)
 
-            
+
 class Person(Node):
     """
     key:

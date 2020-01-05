@@ -1,14 +1,14 @@
-from abc import ABC,abstractclassmethod
-
-
 class Edge:
-    @abstractclassmethod
-    def __init__(self):
+    def __init__(self, key, ls:[]):
     #FROM witch  TO witch one
         self.FROM=None
         self.TO=None
     #list of information
         self.about=[]
+        self.key=None
+        self.key = key
+        for value in ls:
+            self.about.append(value)
 
 
 class OwnerShip(Edge):
@@ -21,11 +21,6 @@ class OwnerShip(Edge):
         date of own
         payment
     """
-    def __init__(self, a:dict):
-        for k in a.keys():
-            self.key=k
-            for value in a.get(k):
-                self.about.append(value)
 
 
 class Transactions(Edge):
@@ -37,13 +32,7 @@ class Transactions(Edge):
             to where
             date of transaction
             payment
-        """
-
-    def __init__(self, a: dict):
-        for k in a.keys():
-            self.key = k
-            for value in a.get(k):
-                self.about.append(value)
+    """
 
 
 class Call(Edge):
@@ -56,13 +45,7 @@ class Call(Edge):
         call number
         date of call
         how long does calling takes
-           """
-
-    def __init__(self, a: dict):
-        for k in a.keys():
-            self.key = k
-            for value in a.get(k):
-                self.about.append(value)
+    """
 
 
 class Relation(Edge):
@@ -74,9 +57,4 @@ class Relation(Edge):
         to who
         relation
         when relation starts
-           """
-    def __init__(self, a: dict):
-        for k in a.keys():
-            self.key = k
-            for value in a.get(k):
-                self.about.append(value)
+    """
