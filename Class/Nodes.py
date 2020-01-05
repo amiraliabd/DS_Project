@@ -1,19 +1,16 @@
-from abc import ABC,abstractclassmethod
-
-
 class Node:
-    @abstractclassmethod
-    def __init__(self):
-        pass
+    def __init__(self,key,ls:[]):
         self.key = None
     # list of information
         self.about = []
     # list for Edge
         self.OUT=[]
         self.IN=[]
+        self.key=key
+        for value in ls:
+            self.about.append(value)
 
-
-
+            
 class Person(Node):
     """
     key:
@@ -25,11 +22,6 @@ class Person(Node):
         birth place
         place of work
     """
-    def __init__(self, a:dict):
-        for k in a.keys():
-            self.key=k
-            for value in a.get(k):
-                self.about.append(value)
 
 
 class Bank(Node):
@@ -41,11 +33,6 @@ class Bank(Node):
         bank name
         number
     """
-    def __init__(self, a: dict):
-        for k in a.keys():
-            self.key = k
-            for value in a.get(k):
-                self.about.append(value)
 
 
 class Home(Node):
@@ -59,12 +46,6 @@ class Home(Node):
         address
     """
 
-    def __init__(self, a:dict):
-        for k in a.keys():
-            self.key=k
-            for value in a.get(k):
-                self.about.append(value)
-
 
 class Car(Node):
     """
@@ -73,12 +54,8 @@ class Car(Node):
     about list contains :
     owner ID
     model
+    color
     """
-    def __init__(self, a:dict):
-        for k in a.keys():
-            self.key=k
-            for value in a.get(k):
-                self.about.append(value)
 
 
 class Phone(Node):
@@ -89,8 +66,3 @@ class Phone(Node):
         owner ID
         operator name
     """
-    def __init__(self, a:dict):
-        for k in a.keys():
-            self.key=k
-            for value in a.get(k):
-                self.about.append(value)
