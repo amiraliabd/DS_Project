@@ -1,3 +1,4 @@
+
 class Edge:
     def __init__(self, key, ls:[]):
     #FROM witch  TO witch one
