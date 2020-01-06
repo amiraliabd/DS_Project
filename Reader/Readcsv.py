@@ -29,5 +29,4 @@ carsdic = Reader("/home/ehsan/DS_Project/sample data/cars.csv", 0, 4)
 ownershipsdic = Reader("/home/ehsan/DS_Project/sample data/ownerships.csv", 2, 5)
 transactionsdic = Reader("/home/ehsan/DS_Project/sample data/transactions.csv", 2, 5)
 callsdic = Reader("/home/ehsan/DS_Project/sample data/accounts.csv", 2, 5)
-print(carsdic)
 # i dont understand what should i do for relationship edge
