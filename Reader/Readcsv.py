@@ -20,7 +20,7 @@ def Reader(address, middle, end):
     return infodic
 
 # Calling Reader function for making vertexes dictionary
-accountsdic = Reader("/home/ehsan/DS_Project/sample data/accounts.csv", 2, 4)
+accountsdic = Reader("sample data/accounts.csv", 2, 4)
 phonesdic = Reader("/home/ehsan/DS_Project/sample data/phones.csv", 1, 3)
 peopledic = Reader("/home/ehsan/DS_Project/sample data/people.csv", 2, 6)
 homesdic = Reader("/home/ehsan/DS_Project/sample data/homes.csv", 2, 5)
