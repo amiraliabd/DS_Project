@@ -36,4 +36,3 @@ carsdic = Reader("sample data/cars.csv", 0, 4)
 ownershipsdic = Reader("sample data/ownerships.csv", 2, 5)
 transactionsdic = Reader("sample data/transactions.csv", 2, 5)
 callsdic = Reader("sample data/calls.csv", 2, 5)
-

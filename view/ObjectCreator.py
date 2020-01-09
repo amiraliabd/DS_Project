@@ -1,22 +1,7 @@
 from Reader import Readcsv
 from Class import Edge
 from Class import Nodes
-#########################################################################
-
-
-
-
-
-
-#no relation in Readcsv.py
-
-
-
-
-
-
-
-########################################################################
+import threading
 person_nodelist=[]
 account_nodelist=[]
 home_nodelist=[]
@@ -26,6 +11,7 @@ ownership_edgelist=[]
 transaction_edgelist=[]
 call_edgelist=[]
 relation_edgelist=[]
+
 for key in sorted(Readcsv.peopledic):
     person_nodelist.append(Nodes.Person(key,Readcsv.peopledic.get(key)))
 for key in sorted(Readcsv.accountsdic):
@@ -36,8 +22,6 @@ for key in sorted(Readcsv.carsdic):
     car_nodelist.append(Nodes.Car(key,Readcsv.carsdic.get(key)))
 for key in sorted(Readcsv.phonesdic):
     phone_nodelist.append(Nodes.Phone(key,Readcsv.phonesdic.get(key)))
-#__________________________________
-
 def BS(lys, val):
     first = 0
     last = len(lys)-1
@@ -53,32 +37,62 @@ def BS(lys, val):
                 first = mid +1
     return lys[index]
 
+def ownershipcreator():
+    for key in Readcsv.ownershipsdic:
+        #adding edge to list of edges
+        ownership_edgelist.append(Edge.OwnerShip(key,Readcsv.ownershipsdic.get(key)))
+        #adding Node pointer in edge attribute(FROM)
+        ownership_edgelist[-1].FROM=BS(person_nodelist,ownership_edgelist[-1].about[0])
+        #adding Edge pointer to Node attribute(OUT)
+        ownership_edgelist[-1].FROM.OUT.append(ownership_edgelist[-1])
+        if ownership_edgelist[-1].about[1].isdigit():
+            ownership_edgelist[-1].TO = BS(home_nodelist, ownership_edgelist[-1].about[1])
+            ownership_edgelist[-1].TO.IN.append(ownership_edgelist[-1])
+        else:
+            for car in car_nodelist:
+                if car.key==ownership_edgelist[-1].about[1]:
+                    ownership_edgelist[-1].TO=car
+                    car.OUT=ownership_edgelist[-1]
+                    break
+def transactioncreator():
+    for key in Readcsv.transactionsdic:
+        transaction_edgelist.append(Edge.Transactions(key,Readcsv.transactionsdic.get(key)))
+        transaction_edgelist[-1].FROM=BS(account_nodelist,transaction_edgelist[-1].about[0])
+        transaction_edgelist[-1].FROM.OUT.append(transaction_edgelist[-1])
+        transaction_edgelist[-1].TO = BS(account_nodelist, transaction_edgelist[-1].about[1])
+        transaction_edgelist[-1].TO.IN.append(transaction_edgelist[-1])
+def callcreator():
+    for key in Readcsv.callsdic:
+        call_edgelist.append(Edge.Call(key,Readcsv.callsdic.get(key)))
+        call_edgelist[-1].FROM=BS(phone_nodelist,call_edgelist[-1].about[0])
+        call_edgelist[-1].FROM.OUT.append(call_edgelist[-1])
+        call_edgelist[-1].TO=BS(phone_nodelist,call_edgelist[-1].about[1])
+        call_edgelist[-1].TO.IN.append(call_edgelist[-1])
+def relationcreator():
+    for key in Readcsv.relationshipsdic:
+        relation_edgelist.append(Edge.Relation(key,Readcsv.relationshipsdic.get(key)))
+        relation_edgelist[-1].FROM=BS(account_nodelist,key[0:11])
+        relation_edgelist[-1].FROM.OUT.append(relation_edgelist[-1])
+        relation_edgelist[-1].TO=BS(account_nodelist,key[11:23])
+        relation_edgelist[-1].TO.IN.append(relation_edgelist[-1])
 
-for key in Readcsv.ownershipsdic:
-    #adding edge to list of edges
-    ownership_edgelist.append(Edge.OwnerShip(key,Readcsv.ownershipsdic.get(key)))
-    #adding Node pointer in edge attribute(FROM)
-    ownership_edgelist[-1].FROM=BS(person_nodelist,ownership_edgelist[-1].about[0])
-    #adding Edge pointer to Node attribute(OUT)
-    ownership_edgelist[-1].FROM.OUT.append(ownership_edgelist[-1])
-    if ownership_edgelist[-1].about[1].isdigit():
-        ownership_edgelist[-1].TO = BS(home_nodelist, ownership_edgelist[-1].about[1])
-        ownership_edgelist[-1].TO.IN.append(ownership_edgelist[-1])
-    else:
-        for car in car_nodelist:
-            if car.key==ownership_edgelist[-1].about[1]:
-                ownership_edgelist[-1].TO=car
-                car.OUT=ownership_edgelist[-1]
-                break
-for key in Readcsv.transactionsdic:
-    transaction_edgelist.append(Edge.Transactions(key,Readcsv.transactionsdic.get(key)))
-    transaction_edgelist[-1].FROM=BS(account_nodelist,transaction_edgelist[-1].about[0])
-    transaction_edgelist[-1].FROM.OUT.append(transaction_edgelist[-1])
-    transaction_edgelist[-1].TO = BS(account_nodelist, transaction_edgelist[-1].about[1])
-    transaction_edgelist[-1].TO.IN.append(transaction_edgelist[-1])
-for key in Readcsv.callsdic:
-    call_edgelist.append(Edge.Call(key,Readcsv.callsdic.get(key)))
-    call_edgelist[-1].FROM=BS(phone_nodelist,call_edgelist[-1].about[0])
-    call_edgelist[-1].FROM.OUT.append(call_edgelist[-1])
-    call_edgelist[-1].TO=BS(phone_nodelist,call_edgelist[-1].about[1])
-    call_edgelist[-1].TO.IN.append(call_edgelist[-1])
+class Thread1(threading.Thread):
+    def __init__(self):
+        threading.Thread.__init__(self)
+    def run(self) -> None:
+        ownershipcreator()
+        transactioncreator()
+
+
+class Thread2(threading.Thread):
+    def __init__(self):
+        threading.Thread.__init__(self)
+    def run(self) -> None:
+        callcreator()
+        relationcreator()
+t1=Thread1()
+t2=Thread2()
+t1.start()
+t2.start()
+t1.join()
+t2.join()
