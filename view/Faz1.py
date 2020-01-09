@@ -8,12 +8,12 @@ def Tables(address):
     return table
 
 print("accounts table:")
-print(Tables("/home/ehsan/DS_Project/sample data/accounts.csv"))
+print(Tables("sample data/accounts.csv"))
 print("phones table:")
-print(Tables("/home/ehsan/DS_Project/sample data/phones.csv"))
+print(Tables("sample data/phones.csv"))
 print("people table:")
-print(Tables("/home/ehsan/DS_Project/sample data/people.csv"))
+print(Tables("sample data/people.csv"))
 print("homes table:")
-print(Tables("/home/ehsan/DS_Project/sample data/homes.csv"))
+print(Tables("sample data/homes.csv"))
 print("cars table:")
-print(Tables("/home/ehsan/DS_Project/sample data/cars.csv"))
+print(Tables("sample data/cars.csv"))

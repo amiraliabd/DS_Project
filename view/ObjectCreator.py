@@ -8,7 +8,6 @@ from Class import Nodes
 
 
 
-
 #no relation in Readcsv.py
 
 
@@ -37,7 +36,7 @@ for key in sorted(Readcsv.carsdic):
     car_nodelist.append(Nodes.Car(key,Readcsv.carsdic.get(key)))
 for key in sorted(Readcsv.phonesdic):
     phone_nodelist.append(Nodes.Phone(key,Readcsv.phonesdic.get(key)))
-___________________________________
+#__________________________________
 
 def BS(lys, val):
     first = 0
@@ -45,10 +44,10 @@ def BS(lys, val):
     index = -1
     while (first <= last) and (index == -1):
         mid = (first+last)//2
-        if lys[mid.key] == val:
+        if lys[mid].key == val:
             index = mid
         else:
-            if val<lys[mid]:
+            if val<lys[mid].key:
                 last = mid -1
             else:
                 first = mid +1
@@ -61,7 +60,7 @@ for key in Readcsv.ownershipsdic:
     #adding Node pointer in edge attribute(FROM)
     ownership_edgelist[-1].FROM=BS(person_nodelist,ownership_edgelist[-1].about[0])
     #adding Edge pointer to Node attribute(OUT)
-    ownership_edgelist[-1].FROM.OUT.apppend(ownership_edgelist[-1])
+    ownership_edgelist[-1].FROM.OUT.append(ownership_edgelist[-1])
     if ownership_edgelist[-1].about[1].isdigit():
         ownership_edgelist[-1].TO = BS(home_nodelist, ownership_edgelist[-1].about[1])
         ownership_edgelist[-1].TO.IN.append(ownership_edgelist[-1])
@@ -72,7 +71,7 @@ for key in Readcsv.ownershipsdic:
                 car.OUT=ownership_edgelist[-1]
                 break
 for key in Readcsv.transactionsdic:
-    transaction_edgelist.append(Edge.Transactions(key,Readcsv.transactionsdic.grt(key)))
+    transaction_edgelist.append(Edge.Transactions(key,Readcsv.transactionsdic.get(key)))
     transaction_edgelist[-1].FROM=BS(account_nodelist,transaction_edgelist[-1].about[0])
     transaction_edgelist[-1].FROM.OUT.append(transaction_edgelist[-1])
     transaction_edgelist[-1].TO = BS(account_nodelist, transaction_edgelist[-1].about[1])

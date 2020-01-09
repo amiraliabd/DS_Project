@@ -7,16 +7,16 @@ def Reader(address, middle, end):
     infodic = {}
     if middle == 0:
         for k in range(len(csv)):
-            infodic[csv.iloc[k][0]] = []
+            infodic[str(csv.iloc[k][0])] = []
             for v in range(1, end):
-                infodic[csv.iloc[k][0]].append(csv.iloc[k][v])
+                infodic[str(csv.iloc[k][0])].append(str(csv.iloc[k][v]))
     else:
         for k in range(len(csv)):
-            infodic[csv.iloc[k][middle]] = []
+            infodic[str(csv.iloc[k][middle])] = []
             for v in range(0, middle):
-                infodic[csv.iloc[k][middle]].append(csv.iloc[k][v])
+                infodic[str(csv.iloc[k][middle])].append(str(csv.iloc[k][v]))
             for v in range(middle + 1, end):
-                infodic[csv.iloc[k][middle]].append(csv.iloc[k][v])
+                infodic[str(csv.iloc[k][middle])].append(str(csv.iloc[k][v]))
     return infodic
 # making relationship dictionary
 relationcsv = pd.read_csv("sample data/relationships.csv")
@@ -25,7 +25,7 @@ for i in range(len(relationcsv)):
     key = str(relationcsv.iloc[i][0]) + str(relationcsv.iloc[i][1])
     relationshipsdic[key] = []
     for j in range(2, 4):
-        relationshipsdic[key].append(relationcsv.iloc[i][j])
+        relationshipsdic[key].append(str(relationcsv.iloc[i][j]))
 # Calling Reader function for making vertexes dictionary
 accountsdic = Reader("sample data/accounts.csv", 2, 4)
 phonesdic = Reader("sample data/phones.csv", 1, 3)
