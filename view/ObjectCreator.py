@@ -1,11 +1,29 @@
 from Reader import Readcsv
 from Class import Edge
 from Class import Nodes
+#########################################################################3
+
+
+
+
+
+
+
+#no relation in Readcsv.py
+
+
+
+
+
+
+
+########################################################################
 Readcsv.execute()
 person_nodelist=[]
 account_nodelist=[]
 home_nodelist=[]
 car_nodelist=[]
+phone_nodelist=[]
 ownership_edgelist=[]
 transaction_edgelist=[]
 call_edgelist=[]
@@ -18,9 +36,11 @@ for key in sorted(Readcsv.homesdic):
     home_nodelist.append(Nodes.Home(key,Readcsv.homesdic.get(key)))
 for key in sorted(Readcsv.carsdic):
     car_nodelist.append(Nodes.Car(key,Readcsv.carsdic.get(key)))
-#__________________-_________________
-def BS(lys, val):
+for key in sorted(Readcsv.phonesdic):
+    phone_nodelist.append(Nodes.Phone(key,Readcsv.phonesdic.get(key)))
+#___________________________________
 
+def BS(lys, val):
     first = 0
     last = len(lys)-1
     index = -1
@@ -49,8 +69,17 @@ for key in Readcsv.ownershipsdic:
         for car in car_nodelist:
             if car.key==ownership_edgelist[-1].about[1]:
                 ownership_edgelist[-1].TO=car
+                car.OUT=ownership_edgelist[-1]
+                break
 for key in Readcsv.transactionsdic:
     transaction_edgelist.append(Edge.Transactions(key,Readcsv.transactionsdic.grt(key)))
+    transaction_edgelist[-1].FROM=BS(account_nodelist,transaction_edgelist[-1].about[0])
+    transaction_edgelist[-1].FROM.OUT.append(transaction_edgelist[-1])
+    transaction_edgelist[-1].TO = BS(account_nodelist, transaction_edgelist[-1].about[1])
+    transaction_edgelist[-1].TO.IN.append(transaction_edgelist[-1])
 for key in Readcsv.callsdic:
     call_edgelist.append(Edge.Call(key,Readcsv.callsdic.get(key)))
-#no relation in Readcsv.py
+    call_edgelist[-1].FROM=BS(phone_nodelist,call_edgelist[-1].about[0])
+    call_edgelist[-1].FROM.OUT.append(call_edgelist[-1])
+    call_edgelist[-1].TO=BS(phone_nodelist,call_edgelist[-1].about[1])
+    call_edgelist[-1].TO.IN.append(call_edgelist[-1])

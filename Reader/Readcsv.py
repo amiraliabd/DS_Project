@@ -21,13 +21,13 @@ def Reader(address, middle, end):
 
 
 # Calling Reader function for making vertexes dictionary
-accountsdic = Reader("/sample data/accounts.csv", 2, 4)
-phonesdic = Reader("/sample data/phones.csv", 1, 3)
-peopledic = Reader("/sample data/people.csv", 2, 6)
-homesdic = Reader("/sample data/homes.csv", 2, 5)
-carsdic = Reader("/sample data/cars.csv", 0, 4)
+accountsdic = Reader("sample data/accounts.csv", 2, 4)
+phonesdic = Reader("sample data/phones.csv", 1, 3)
+peopledic = Reader("sample data/people.csv", 2, 6)
+homesdic = Reader("sample data/homes.csv", 2, 5)
+carsdic = Reader("sample data/cars.csv", 0, 4)
 # Calling Reader function for making edges dictionary
-ownershipsdic = Reader("/sample data/ownerships.csv", 2, 5)
-transactionsdic = Reader("/sample data/transactions.csv", 2, 5)
-callsdic = Reader("/sample data/calls.csv", 2, 5)
+ownershipsdic = Reader("sample data/ownerships.csv", 2, 5)
+transactionsdic = Reader("sample data/transactions.csv", 2, 5)
+callsdic = Reader("sample data/calls.csv", 2, 5)
 # i dont understand what should i do for relationship edge
