@@ -18,15 +18,22 @@ def Reader(address, middle, end):
             for v in range(middle + 1, end):
                 infodic[csv.iloc[k][middle]].append(csv.iloc[k][v])
     return infodic
-
+# making relationship dictionary
+relationcsv = pd.read_csv("sample data/relationships.csv")
+relationshipsdic = {}
+for i in range(len(relationcsv)):
+    key = str(relationcsv.iloc[i][0]) + str(relationcsv.iloc[i][1])
+    relationshipsdic[key] = []
+    for j in range(2, 4):
+        relationshipsdic[key].append(relationcsv.iloc[i][j])
 # Calling Reader function for making vertexes dictionary
 accountsdic = Reader("sample data/accounts.csv", 2, 4)
-phonesdic = Reader("/home/ehsan/DS_Project/sample data/phones.csv", 1, 3)
-peopledic = Reader("/home/ehsan/DS_Project/sample data/people.csv", 2, 6)
-homesdic = Reader("/home/ehsan/DS_Project/sample data/homes.csv", 2, 5)
-carsdic = Reader("/home/ehsan/DS_Project/sample data/cars.csv", 0, 4)
+phonesdic = Reader("sample data/phones.csv", 1, 3)
+peopledic = Reader("sample data/people.csv", 2, 6)
+homesdic = Reader("sample data/homes.csv", 2, 5)
+carsdic = Reader("sample data/cars.csv", 0, 4)
 # Calling Reader function for making edges dictionary
-ownershipsdic = Reader("/home/ehsan/DS_Project/sample data/ownerships.csv", 2, 5)
-transactionsdic = Reader("/home/ehsan/DS_Project/sample data/transactions.csv", 2, 5)
-callsdic = Reader("/home/ehsan/DS_Project/sample data/calls.csv", 2, 5)
- # i dont understand what should i do for relationship edge
+ownershipsdic = Reader("sample data/ownerships.csv", 2, 5)
+transactionsdic = Reader("sample data/transactions.csv", 2, 5)
+callsdic = Reader("sample data/calls.csv", 2, 5)
+
