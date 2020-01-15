@@ -9,34 +9,34 @@ phoneDF=None
 relationshipDF=None
 transactionDF=None
 def read_relation_csv():
-    relationDF = pd.read_csv("sample data/relationships.csv")
+    relationDF = pd.read_csv("/home/amirali/DS_Project/Reader/sample data/relationships.csv")
     return relationDF
 def read_account_csv():
-    accountDF = pd.read_csv('sample data/accounts.csv')
+    accountDF = pd.read_csv('/home/amirali/DS_Project/Reader/sample data/accounts.csv')
     return accountDF
 def read_call_csv():
-    callDF = pd.read_csv('sample data/calls.csv')
+    callDF = pd.read_csv('/home/amirali/DS_Project/Reader/sample data/calls.csv')
     return callDF
 def read_car_csv():
-    carDF = pd.read_csv('sample data/cars.csv')
+    carDF = pd.read_csv('/home/amirali/DS_Project/Reader/sample data/cars.csv')
     return carDF
 def read_home_csv():
-    homeDF = pd.read_csv('sample data/homes.csv')
+    homeDF = pd.read_csv('/home/amirali/DS_Project/Reader/sample data/homes.csv')
     return homeDF
 def read_ownership_csv():
-    ownershipDF = pd.read_csv('sample data/ownerships.csv')
+    ownershipDF = pd.read_csv('/home/amirali/DS_Project/Reader/sample data/ownerships.csv')
     return ownershipDF
 def read_people_csv():
-    peopleDF = pd.read_csv('sample data/people.csv')
+    peopleDF = pd.read_csv('/home/amirali/DS_Project/Reader/sample data/people.csv')
     return peopleDF
 def read_phone_csv():
-    phoneDF = pd.read_csv('sample data/phones.csv')
+    phoneDF = pd.read_csv('/home/amirali/DS_Project/Reader/sample data/phones.csv')
     return phoneDF
 def read_relationship_csv():
-    relationshipDF = pd.read_csv('sample data/relationships.csv')
+    relationshipDF = pd.read_csv('/home/amirali/DS_Project/Reader/sample data/relationships.csv')
     return relationshipDF
 def read_transaction_csv():
-    transactionDF = pd.read_csv('sample data/transactions.csv')
+    transactionDF = pd.read_csv('/home/amirali/DS_Project/Reader/sample data/transactions.csv')
     return transactionDF
 
 #to create this object just one time
