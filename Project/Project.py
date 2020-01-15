@@ -88,17 +88,14 @@ doubt_frame=peopleDF[ peopleDF['ssn'].isin(ls) ]
 print(tabulate(doubt_frame, tablefmt='psql', headers='keys'))
 # faze 4:---------------------------------------------------------------------------------------------------------------
 print('faze 4:---------------------------------------------------------------------------------------------------------------')
-fake=pd.DataFrame()
-badboye=pd.DataFrame()
-ls=[fake['ssn'].iloc[i] for i in range(len(fake))]
-phonenumber=phoneDF[(phoneDF['ssn'].isin(ls))]
-ls=[phonenumber['number'].iloc(i) for i in range(len(phonenumber))]
-
-ls1=[badboye['ssn'].iloc[i] for i in range(len(badboye))]
-phonenumber=phoneDF[(phoneDF['ssn'].isin(ls))]
-ls1=[phonenumber['number'].iloc(i) for i in range(len(badboye))]
-number_result=callDF[( (callDF['from'].isin(ls1)) & (callDF['to'].isin(ls)) )]
-final_list=[callDF['to'].iloc[i] for i in range(len(callDF))]
+doubtssn=[doubt_frame['ssn'].iloc[i] for i in range(len(doubt_frame))]
+doubtphonenumber=phoneDF[(phoneDF['ssn'].isin(doubtssn))]
+lst_doubtphonenumber=[doubtphonenumber['number'].iloc(j) for j in range(len(doubtphonenumber))]
+smuglerssn=[smuglers['ssn'].iloc[i] for i in range(len(smuglers))]
+smuglerphonenumber=phoneDF[(phoneDF['ssn'].isin(smuglerssn))]
+list_smuglerphonenumber=[smuglerphonenumber['number'].iloc(i) for i in range(len(smuglers))]
+number_result=callDF[( (callDF['from'].isin(list_smuglerphonenumber)) & (callDF['to'].isin(lst_doubtphonenumber)) )]
+final_list=[number_result['to'].iloc[i] for i in range(len(callDF))]
 final_Frame=phoneDF[ (phoneDF['number'].isin(final_list)) ]
 final_list=[final_Frame['ssn'].iloc[i] for i in range(len(final_Frame))]
 final_Frame=peopleDF[ (peopleDF['ssn'].isin(final_list)) ]
