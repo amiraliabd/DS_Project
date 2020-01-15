@@ -1,6 +1,8 @@
 import pandas as pd
 from prettytable import from_csv
 from tabulate import tabulate
+import networkx as nx
+from itertools import combinations
 '''
 using pandas lib for making dataframes for nodes and edges
 
@@ -98,6 +100,30 @@ final_result=peopleDF.loc[ (peopleDF['ssn'].isin(ls))]
 print(tabulate(final_result, tablefmt='psql', headers='keys'))
 # faze 3:---------------------------------------------------------------------------------------------------------------
 print('faze 3:---------------------------------------------------------------------------------------------------------------')
-
+# making graph of transactions
+TransactionsGraph = nx.Graph()
+transaction = zip(transactionDF["from"], transactionDF["to"])
+TransactionsGraph.add_edges_from(transaction)
+TransactionsGraph = TransactionsGraph.to_directed()
+#
+doubt = final_result
+smuglers = peopleDF.loc[(peopleDF['work'] == 'قاچاقچی')]
+doubtssn = [doubt['ssn'].iloc[i] for i in range(len(doubt))]
+smuglersssn = [smuglers['ssn'].iloc[j] for j in range(len(smuglers))]
+doubledoubt = []
+smuglersaccount = accountDF.loc[ (accountDF['ssn'].isin(smuglersssn))]
+doubtsaccount = accountDF.loc[ (accountDF['ssn'].isin(doubtssn))]
+fromsmugle = smuglersaccount["account_id"]
+todoubt = doubtsaccount["account_id"]
+for sid in fromsmugle:
+    for did in todoubt:
+        if TransactionsGraph.has_node(sid) and TransactionsGraph.has_node(did):
+            if nx.has_path(TransactionsGraph, sid, did):
+                if nx.shortest_path_length(TransactionsGraph, sid, did) <= 5:
+                    doubledoubt.append(did)
+doubt_frame=accountDF[accountDF['account_id'].isin(doubledoubt)]
+ls=[doubt_frame['ssn'].iloc[i] for i in range(len(doubt_frame))]
+doubt_frame=peopleDF[ peopleDF['ssn'].isin(ls) ]
+print(tabulate(doubt_frame, tablefmt='psql', headers='keys'))
 # faze 4:---------------------------------------------------------------------------------------------------------------
 print('faze 4:---------------------------------------------------------------------------------------------------------------')
