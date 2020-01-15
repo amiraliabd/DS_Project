@@ -6,7 +6,7 @@ df=rc.ownershipDF.loc[(rc.ownershipDF['date']>='2018-00-00') & (rc.ownershipDF['
 ls=[]
 for i in range(len(df)):
     ls.append(df['from'].iloc[i])
-#print(tabulate(rc.peopleDF.loc[(rc.peopleDF['ssn'].isin(ls))],tablefmt='psql',headers='keys'))
+#print(tabulate(df,tablefmt='psql',headers='keys'))
 result0=rc.peopleDF.loc[(rc.peopleDF['ssn'].isin(ls)) & ((rc.peopleDF['work']=='گمرک') | (rc.peopleDF['work'].str.contains('بندر') ) )]
 #print(tabulate(result0,tablefmt='psql',headers='keys'))
 ls=[]
@@ -15,5 +15,10 @@ for i in range(len(result0)):
 rel=['PARENT','OFFSPRING','SPOUSE','SIBLING']
 result1=rc.relationshipDF.loc[( (rc.relationshipDF['from'].isin(ls)) |(rc.relationshipDF['to'].isin(ls))) ]
 #print(tabulate(result1,tablefmt='psql',headers='keys'))
-final_result=result1.loc[ (result1['relation'].isin(rel)) ]
+result2=result1.loc[ (result1['relation'].isin(rel)) ]
+#print(tabulate(final_result,tablefmt='psql',headers='keys'))
+ls=[]
+for i in range(len(result2)):
+    ls.append(result2['from'].iloc[i])
+final_result=rc.peopleDF.loc[ (rc.peopleDF['ssn'].isin(ls))]
 print(tabulate(final_result,tablefmt='psql',headers='keys'))
