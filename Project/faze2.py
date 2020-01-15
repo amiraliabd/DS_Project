@@ -1,7 +1,7 @@
 import pandas as pd
 from prettytable import from_csv
 from tabulate import tabulate
-from Reader import Readcsv as rc
+import Readcsv as rc
 df=rc.ownershipDF.loc[(rc.ownershipDF['date']>='2018-00-00') & (rc.ownershipDF['date']<='2020-00-00')]
 ls=[]
 for i in range(len(df)):
