@@ -1,38 +1,52 @@
-
 import pandas as pd
-# function for making dictionary of vertexes and edges
-def Reader(address, middle, end):
-    csv = pd.read_csv(address)
-    csv.head()
-    infodic = {}
-    if middle == 0:
-        for k in range(len(csv)):
-            infodic[str(csv.iloc[k][0])] = []
-            for v in range(1, end):
-                infodic[str(csv.iloc[k][0])].append(str(csv.iloc[k][v]))
-    else:
-        for k in range(len(csv)):
-            infodic[str(csv.iloc[k][middle])] = []
-            for v in range(0, middle):
-                infodic[str(csv.iloc[k][middle])].append(str(csv.iloc[k][v]))
-            for v in range(middle + 1, end):
-                infodic[str(csv.iloc[k][middle])].append(str(csv.iloc[k][v]))
-    return infodic
-# making relationship dictionary
-relationcsv = pd.read_csv("sample data/relationships.csv")
-relationshipsdic = {}
-for i in range(len(relationcsv)):
-    key = str(relationcsv.iloc[i][0]) + str(relationcsv.iloc[i][1])
-    relationshipsdic[key] = []
-    for j in range(2, 4):
-        relationshipsdic[key].append(str(relationcsv.iloc[i][j]))
-# Calling Reader function for making vertexes dictionary
-accountsdic = Reader("sample data/accounts.csv", 2, 4)
-phonesdic = Reader("sample data/phones.csv", 1, 3)
-peopledic = Reader("sample data/people.csv", 2, 6)
-homesdic = Reader("sample data/homes.csv", 2, 5)
-carsdic = Reader("sample data/cars.csv", 0, 4)
-# Calling Reader function for making edges dictionary
-ownershipsdic = Reader("sample data/ownerships.csv", 2, 5)
-transactionsdic = Reader("sample data/transactions.csv", 2, 5)
-callsdic = Reader("sample data/calls.csv", 2, 5)
+accountDF=None
+callDF=None
+carDF=None
+homeDF=None
+ownershipDF=None
+peopleDF=None
+phoneDF=None
+relationshipDF=None
+transactionDF=None
+def read_relation_csv():
+    relationDF = pd.read_csv("sample data/relationships.csv")
+    return relationDF
+def read_account_csv():
+    accountDF = pd.read_csv('sample data/accounts.csv')
+    return accountDF
+def read_call_csv():
+    callDF = pd.read_csv('sample data/calls.csv')
+    return callDF
+def read_car_csv():
+    carDF = pd.read_csv('sample data/cars.csv')
+    return carDF
+def read_home_csv():
+    homeDF = pd.read_csv('sample data/homes.csv')
+    return homeDF
+def read_ownership_csv():
+    ownershipDF = pd.read_csv('sample data/ownerships.csv')
+    return ownershipDF
+def read_people_csv():
+    peopleDF = pd.read_csv('sample data/people.csv')
+    return peopleDF
+def read_phone_csv():
+    phoneDF = pd.read_csv('sample data/phones.csv')
+    return phoneDF
+def read_relationship_csv():
+    relationshipDF = pd.read_csv('sample data/relationships.csv')
+    return relationshipDF
+def read_transaction_csv():
+    transactionDF = pd.read_csv('sample data/transactions.csv')
+    return transactionDF
+
+#to create this object just one time
+if accountDF== None:
+    accountDF=read_account_csv()
+    callDF=read_call_csv()
+    carDF=read_car_csv()
+    homeDF=read_home_csv()
+    ownershipDF=read_ownership_csv()
+    peopleDF=read_people_csv()
+    phoneDF=read_phone_csv()
+    relationshipDF=read_relationship_csv()
+    transactionDF=read_transaction_csv()
