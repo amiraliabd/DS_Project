@@ -61,6 +61,63 @@ final_result=peopleDF.loc[ (peopleDF['ssn'].isin(ls))]
 print(tabulate(final_result, tablefmt='psql', headers='keys'))
 # faze 3:---------------------------------------------------------------------------------------------------------------
 print('faze 3:---------------------------------------------------------------------------------------------------------------')
+
+
+def bidirectional_pred_succ(G, source, target):
+    # does BFS from both source and target and meets in the middle
+    if target == source:
+        return ({target: None}, {source: None}, source)
+
+    Gpred = G.pred
+    Gsucc = G.succ
+
+    # predecesssor and successors in search
+    pred = {source: None}
+    succ = {target: None}
+
+    # initialize fringes, start with forward
+    forward_fringe = [source]
+    reverse_fringe = [target]
+
+    while forward_fringe and reverse_fringe:
+        if len(forward_fringe) <= len(reverse_fringe):
+            this_level = forward_fringe
+            forward_fringe = []
+            for v in this_level:
+                for w in Gsucc[v]:
+                    if w not in pred:
+                        forward_fringe.append(w)
+                        pred[w] = v
+                    if w in succ:  # path found
+                        return pred, succ, w
+        else:
+            this_level = reverse_fringe
+            reverse_fringe = []
+            for v in this_level:
+                for w in Gpred[v]:
+                    if w not in succ:
+                        succ[w] = v
+                        reverse_fringe.append(w)
+                    if w in pred:  # found path
+                        return pred, succ, w
+
+
+def bidirectional_SP(G, source, target):
+    results = bidirectional_pred_succ(G, source, target)
+    pred, succ, w = results
+    path = []
+    while w is not None:
+        path.append(w)
+        w = pred[w]
+    path.reverse()
+    w = succ[path[-1]]
+    while w is not None:
+        path.append(w)
+        w = succ[w]
+    return len(path)
+
+
+
 # making graph of transactions
 TransactionsGraph = nx.Graph()
 transaction = zip(transactionDF["from"], transactionDF["to"])
@@ -80,7 +137,7 @@ for sid in fromsmugle:
     for did in todoubt:
         if TransactionsGraph.has_node(sid) and TransactionsGraph.has_node(did):
             if nx.has_path(TransactionsGraph, sid, did):
-                if nx.shortest_path_length(TransactionsGraph, sid, did) <= 5:
+                if bidirectional_SP(TransactionsGraph, sid, did) <= 5:
                     doubledoubt.append(did)
 doubt_frame=accountDF[accountDF['account_id'].isin(doubledoubt)]
 ls=[doubt_frame['ssn'].iloc[i] for i in range(len(doubt_frame))]
@@ -90,12 +147,12 @@ print(tabulate(doubt_frame, tablefmt='psql', headers='keys'))
 print('faze 4:---------------------------------------------------------------------------------------------------------------')
 doubtssn=[doubt_frame['ssn'].iloc[i] for i in range(len(doubt_frame))]
 doubtphonenumber=phoneDF[(phoneDF['ssn'].isin(doubtssn))]
-lst_doubtphonenumber=[doubtphonenumber['number'].iloc(j) for j in range(len(doubtphonenumber))]
+lst_doubtphonenumber=[doubtphonenumber['number'].iloc[j] for j in range(len(doubtphonenumber))]
 smuglerssn=[smuglers['ssn'].iloc[i] for i in range(len(smuglers))]
 smuglerphonenumber=phoneDF[(phoneDF['ssn'].isin(smuglerssn))]
-list_smuglerphonenumber=[smuglerphonenumber['number'].iloc(i) for i in range(len(smuglers))]
+list_smuglerphonenumber=[smuglerphonenumber['number'].iloc[i] for i in range(len(smuglerphonenumber))]
 number_result=callDF[( (callDF['from'].isin(list_smuglerphonenumber)) & (callDF['to'].isin(lst_doubtphonenumber)) )]
-final_list=[number_result['to'].iloc[i] for i in range(len(callDF))]
+final_list=[number_result['to'].iloc[i] for i in range(len(number_result))]
 final_Frame=phoneDF[ (phoneDF['number'].isin(final_list)) ]
 final_list=[final_Frame['ssn'].iloc[i] for i in range(len(final_Frame))]
 final_Frame=peopleDF[ (peopleDF['ssn'].isin(final_list)) ]
