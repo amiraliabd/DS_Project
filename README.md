@@ -6,14 +6,14 @@ each file has a column as unique value and these values are foreign key in other
 the story:::
 police detect smugglers and they are trying to find people who are smugler's connection in 
 money-laundering.
-faze1:
+phase 1:
 police ask you to read and show the data of csv files in tables
-faze2:
+phase 2:
 police think the connections must buy car or home for themselves or for Their first order family in last 2 years. you must find theme
-faze3:
+phase 3:
 to be sure that people founded in faze 2 to be criminal police ask you to check if money is transferd to their bank account by max 5 transactions.
 filter people in faze 2 and show them again
-faze 4:
+phase 4:
 to be certain police asks you to fined pople in faze 4 who has phone call from smuglers.
 ............................................................................................
 about implementation:
